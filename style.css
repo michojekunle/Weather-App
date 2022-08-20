@@ -1,0 +1,17 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url('');
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+
