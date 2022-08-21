@@ -11,7 +11,10 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
-    height:500px;
+    height:900px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     min-height: 100vh;
     width: 100%;
     font-family: 'Poppins', sans-serif;
@@ -19,7 +22,7 @@ body {
 
 .container {
     padding: 20px 70px;
-    color: #fff;
+    color: #fff;    
 }
 
 .current-info {
@@ -45,6 +48,10 @@ body {
     font-size: 30px;
 }
 
+.date-container #weather {
+    font-size: 20px;
+}
+
 .place-container {
     text-align: end;
 }
@@ -55,8 +62,8 @@ body {
 }
 
 .place-container .country{
-    font-size: 12px;  
-    font-weight: 700;
+    font-size: 8px;  
+    font-weight: 500;
 }
 
 .current-info .others {
@@ -78,7 +85,7 @@ body {
 .future-forecast {
     background-color: rgba(24, 24, 27, .8);
     padding: 25px;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     display: flex;
     width: 100%;
@@ -121,11 +128,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 140px;
     justify-content: center;
     margin: 0 10px;
     border: 1px solid #eee;
     border-radius: 10px;
     padding: 12px;
+    transition: .8s;
+    cursor: pointer;
+}
+
+.weather-forecast .weather-forecast-item:hover {
+    transform: scale(1.1);
 }
 
 .weather-forecast .weather-forecast-item .day {
@@ -178,8 +192,8 @@ body {
     }
     
     .place-container .country{
-        font-size: 12px;  
-        font-weight: 700;
+        font-size: 6px;  
+        font-weight: 300;
     }
 }
 

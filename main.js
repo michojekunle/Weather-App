@@ -17,7 +17,7 @@ setInterval(() => {
     const date = time.getDate();
     const day = time.getDay();
     const hours = time.getHours();
-    const hoursIn12hrFormat = hours >= 13 ? `0 {hours} % 12` :hours;
+    const hoursIn12hrFormat = (hours >= 13 ? `${hours%12}` :hours);
     const minutes = time.getMinutes();
     const ampm = hours >= 12? 'PM' : 'AM';
 
@@ -29,11 +29,10 @@ setInterval(() => {
 
 getWeatherData();
 
-const getUserLocation = async () => {
+// const getUserLocation = async () => {
     
-}
-
-getUserLocation();
+// }
+// getUserLocation();
 
 async function getWeatherData() {
     let [month, date, year] = new Date().toLocaleDateString("en-US").split("/");
@@ -63,7 +62,15 @@ async function getWeatherData() {
 }
 
 function showWeatherData(data) {
-const { humidity, wind_speed, pressure } = data.periods[0];
+    let time = new Date();
+    let presentDay = time.getDay()+1;
+    const { humidity, icon, avgTempC, pressureMB, sunrise, sunset, weather, feelslikeC, windSpeedMPH } = data.periods[presentDay<7?presentDay:0];
+    const { tz } = data.profile;
+    const { lat, long } = data.loc;
+
+    timeZone.innerHTML = tz;
+    countryEl.innerHTML = `Latitude: ${lat}, Longitude: ${long}`;
+    document.getElementById('weather').innerHTML = `${feelslikeC}&#176; C, ${weather}`;
 
    curentWeatherItems.innerHTML = `
     <div class="weather-item">
@@ -72,11 +79,11 @@ const { humidity, wind_speed, pressure } = data.periods[0];
     </div>
     <div class="weather-item">
         <div>Pressure</div>
-        <div>${pressure}</div>
+        <div>${pressureMB}</div>
     </div>
     <div class="weather-item">
         <div>Wind Speed</div>
-        <div>${""}</div>
+        <div>${windSpeedMPH} mph</div>
     </div>
     <div class="weather-item">
         <div>Sunrise</div>
@@ -88,7 +95,62 @@ const { humidity, wind_speed, pressure } = data.periods[0];
     </div>
     `;
 
-    
+    data.periods.forEach((day, i) => {
+        const days = ["Sat", "Sun", "Mon", "Tues", "Wed", "Thur", "Fri"]
+        const weatherForecastItem = document.createElement('div');
+        weatherForecastItem.classList.add('weather-forecast-item');
+        weatherForecastItem.innerHTML = `
+                <div class="day">${days[i]}</div>
+                <img src="./AerisIcons/${day.icon}" alt="weather-icon" class="w-icon">
+                <div class="temp">Night - ${day.minTempC}&#176; C</div>
+                <div class="temp">Day - ${day.maxTempC}&#176; C</div>
+        `;
+        weatherForecastElement.appendChild(weatherForecastItem);
+
+    });
+
+  /*<div class="weather-forecast-item">
+                <div class="day">Mon</div>
+                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon" class="w-icon">
+                <div class="temp">Night - 25.6&#176; C</div>
+                <div class="temp">Day - 35.6&#176; C</div>
+            </div>
+            <div class="weather-forecast-item">
+                <div class="day">Tue</div>
+                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon" class="w-icon">
+                <div class="temp">Night - 25.6&#176; C</div>
+                <div class="temp">Day - 35.6&#176; C</div>
+            </div>
+            <div class="weather-forecast-item">
+                <div class="day">Wed</div>
+                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon" class="w-icon">
+                <div class="temp">Night - 25.6&#176; C</div>
+                <div class="temp">Day - 35.6&#176; C</div>
+            </div>
+            <div class="weather-forecast-item">
+                <div class="day">Thur</div>
+                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon" class="w-icon">
+                <div class="temp">Night - 25.6&#176; C</div>
+                <div class="temp">Day - 35.6&#176; C</div>
+            </div>
+            <div class="weather-forecast-item">
+                <div class="day">Fri</div>
+                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon" class="w-icon">
+                <div class="temp">Night - 25.6&#176; C</div>
+                <div class="temp">Day - 35.6&#176; C</div>
+            </div>
+            <div class="weather-forecast-item">
+                <div class="day">Sat</div>
+                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon" class="w-icon">
+                <div class="temp">Night - 25.6&#176; C</div>
+                <div class="temp">Day - 35.6&#176; C</div>
+            </div>
+            <div class="weather-forecast-item">
+                <div class="day">Sun</div>
+                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon" class="w-icon">
+                <div class="temp">Night - 25.6&#176; C</div>
+                <div class="temp">Day - 35.6&#176; C</div>
+            </div> */  
 
 
 }
