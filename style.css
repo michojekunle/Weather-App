@@ -85,7 +85,6 @@ body {
     align-items: center;
     justify-content: center;
     color:#fff;
-    overflow-x: scroll;
 }
 
 .future-forecast::-webkit-scrollbar {
@@ -182,4 +181,12 @@ body {
         font-size: 12px;  
         font-weight: 700;
     }
+}
+
+@media only screen and (max-width:1000px) {
+    .future-forecast {
+        justify-content: start;
+        align-items: none;
+        overflow-x: scroll;
+    }      
 }
